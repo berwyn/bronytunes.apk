@@ -1,8 +1,23 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:windowActionBar">false</item>
+        <item name="windowActionBar">false</item>
     </style>
+
+    <!--<style name="AppTheme.OverlayActionBar" parent="AppTheme">-->
+        <!--<item name="android:windowActionBarOverlay">true</item>-->
+        <!--<item name="android:actionBarStyle">@style/AppTheme.OverlayActionBar.ActionBar</item>-->
+    <!--</style>-->
+
+    <!--<style name="AppTheme.OverlayActionBar.ActionBar" parent="android:Widget.Holo.Light.ActionBar.Solid.Inverse">-->
+        <!--<item name="android:background">@android:color/transparent</item>-->
+    <!--</style>-->
 
 </resources>

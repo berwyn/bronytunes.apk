@@ -1,34 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.bronytunes.app" >
+<manifest
+    package="com.bronytunes.app"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
+        android:name="com.bronytunes.app.BronyTunesApp"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:name=".BronyTunesApp">
+        android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.MainActivity"
-            android:label="@string/app_name" >
+            android:name="com.bronytunes.app.ui.MainActivity"
+            android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.DetailActivity"
+            android:name="com.bronytunes.app.ui.DetailActivity"
             android:label="@string/title_activity_detail"
-            android:parentActivityName=".ui.MainActivity" >
+            android:parentActivityName="com.bronytunes.app.ui.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.bronytunes.app.MainActivity" />
+                android:value="com.bronytunes.app.MainActivity"/>
+
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
                 <data android:scheme="bronytunes"/>
+
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:host="bronytunes.com"/>
+                <data android:pathPattern=".*" />
             </intent-filter>
         </activity>
     </application>
