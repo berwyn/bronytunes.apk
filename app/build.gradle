@@ -3,8 +3,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.13.2'
-        classpath 'me.tatarka:gradle-retrolambda:2.2.3'
+        classpath 'com.android.tools.build:gradle:1.0.0'
+        classpath 'me.tatarka:gradle-retrolambda:2.4.1'
     }
 }
 
@@ -24,7 +24,7 @@ def buildTime = new Date().format("yyyy-MM-dd'T'HH:mm'Z'", TimeZone.getTimeZone(
 
 android {
     compileSdkVersion 21
-    buildToolsVersion '21.0.2'
+    buildToolsVersion '21.1.2'
 
     defaultConfig {
         applicationId 'com.bronytunes.app'
@@ -44,7 +44,7 @@ android {
     }
     buildTypes {
         release {
-            runProguard false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
         debug {
@@ -57,6 +57,7 @@ android {
 repositories {
     mavenCentral()
     mavenLocal()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 dependencies {
@@ -64,25 +65,35 @@ dependencies {
 
     provided 'com.squareup.dagger:dagger-compiler:1.2.2'
 
+    compile 'com.bronytunes:java:1.0.0'
+
+    compile 'com.jakewharton.timber:timber:2.5.0'
+    compile 'com.jakewharton:butterknife:6.0.0'
+
+    compile 'com.squareup.okhttp:okhttp:2.1.0'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.1.0'
+    compile 'com.squareup.retrofit:retrofit:1.8.0'
+    compile 'com.squareup.picasso:picasso:2.4.0'
+    compile 'com.squareup.dagger:dagger:1.2.2'
+
+    compile 'io.reactivex:rxandroid:0.24.0'
+
+    compile 'com.google.code.gson:gson:2.3.1'
+    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+    compile 'com.sothree.slidinguppanel:library:2.0.4'
+    compile 'org.lucasr.twowayview:core:1.0.0-SNAPSHOT@aar'
+    compile 'org.lucasr.twowayview:layouts:1.0.0-SNAPSHOT@aar'
+    compile 'com.melnykov:floatingactionbutton:1.1.0'
+    compile 'com.github.manuelpeinado.fadingactionbar:fadingactionbar:3.1.2'
+
+    compile 'com.android.support:mediarouter-v7:21.0.2'
+    compile 'com.android.support:support-v4:21.0.3'
+    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'com.android.support:palette-v7:21.0.2'
+    compile 'com.android.support:recyclerview-v7:21.0.2'
+    compile 'com.android.support:cardview-v7:21.0.2'
 
     debugCompile 'com.jakewharton.madge:madge:1.1.1'
     debugCompile 'com.jakewharton.scalpel:scalpel:1.1.2'
-    debugCompile 'com.squareup.retrofit:retrofit-mock:1.6.1'
-
-    compile 'com.github.manuelpeinado.fadingactionbar:fadingactionbar:3.1.2'
-    compile 'com.bronytunes:java:1.0.0'
-    compile 'com.jakewharton.timber:timber:2.4.1'
-    compile 'com.jakewharton:butterknife:5.1.2'
-    compile 'com.google.code.gson:gson:2.3'
-    compile 'com.squareup.okhttp:okhttp:2.0.0'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
-    compile 'com.squareup.retrofit:retrofit:1.6.1'
-    compile 'com.squareup.picasso:picasso:2.3.4'
-    compile 'com.squareup.dagger:dagger:1.2.2'
-    compile 'com.netflix.rxjava:rxjava-android:0.20.3'
-    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
-    compile 'com.sothree.slidinguppanel:library:2.0.1'
-    compile 'com.android.support:mediarouter-v7:21.0.0'
-    compile 'com.android.support:appcompat-v7:21.0.0'
-    compile 'com.android.support:support-v4:21.0.0'
+    debugCompile 'com.squareup.retrofit:retrofit-mock:1.8.0'
 }
