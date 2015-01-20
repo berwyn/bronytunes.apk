@@ -215,9 +215,6 @@ public class TrackListingFragment extends Fragment {
         public void onBindViewHolder(TrackViewHolder holder, int position) {
             Album album = data[position];
 
-            String artUrl = String.format("%1s%2s?song_id=%3s", "http://bronytunes.com", API.ARTWORK_ROUTE, album.songId);
-            Timber.d(artUrl);
-
             holder.albumName.setText(album.title);
             holder.artistName.setText(album.artistName);
 
