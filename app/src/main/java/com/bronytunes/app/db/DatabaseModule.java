@@ -2,8 +2,6 @@ package com.bronytunes.app.db;
 
 import android.app.Application;
 
-import com.bronytunes.app.ui.TestActivity;
-
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -14,7 +12,6 @@ import dagger.Provides;
  */
 @Module(
         injects = {
-                TestActivity.class
         },
         complete = false,
         library = true

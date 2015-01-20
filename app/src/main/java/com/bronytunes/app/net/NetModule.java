@@ -2,7 +2,7 @@ package com.bronytunes.app.net;
 
 import com.bronytunes.API;
 import com.bronytunes.app.BuildConfig;
-import com.bronytunes.app.ui.TestActivity;
+import com.bronytunes.app.ui.TrackListingFragment;
 
 import javax.inject.Singleton;
 
@@ -15,7 +15,7 @@ import retrofit.RestAdapter;
  */
 @Module(
         injects = {
-                TestActivity.class
+                TrackListingFragment.class
         },
         complete = false,
         library = true
