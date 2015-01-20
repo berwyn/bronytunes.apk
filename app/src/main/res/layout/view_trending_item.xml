@@ -5,7 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="72dp"
-    app:cardCornerRadius="4dp">
+    app:cardCornerRadius="2dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,11 +17,11 @@
         <TextView
             android:id="@+id/trendText"
             style="@style/Base.TextAppearance.AppCompat.Subhead"
-            android:layout_width="wrap_content"
+            android:layout_width="48dp"
             android:layout_height="fill_parent"
             android:gravity="center"
             android:padding="8dp"
-            tools:text="1."/>
+            tools:text="10."/>
 
         <com.bronytunes.app.ui.widget.SquareImageView
             android:id="@+id/albumArt"

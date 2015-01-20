@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -19,9 +20,6 @@ import com.bronytunes.app.BronyTunesApp;
 import com.bronytunes.app.R;
 import com.bronytunes.model.Album;
 import com.squareup.picasso.Picasso;
-
-import org.lucasr.twowayview.TwoWayLayoutManager;
-import org.lucasr.twowayview.widget.ListLayoutManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -104,7 +102,7 @@ public class TrackListingFragment extends Fragment {
         switch (endpoint) {
             default:
             case ENDPOINT_FEATURED:
-                layoutManager = new ListLayoutManager(getActivity(), TwoWayLayoutManager.Orientation.VERTICAL);
+                layoutManager = new LinearLayoutManager(getActivity());
                 api.getFeaturedAlbums()
                    .subscribeOn(Schedulers.io())
                    .observeOn(AndroidSchedulers.mainThread())
@@ -113,7 +111,7 @@ public class TrackListingFragment extends Fragment {
                 break;
 
             case ENDPOINT_TRENDING:
-                layoutManager = new ListLayoutManager(getActivity(), TwoWayLayoutManager.Orientation.VERTICAL);
+                layoutManager = new LinearLayoutManager(getActivity());
                 api.getTrendingAlbums()
                    .subscribeOn(Schedulers.io())
                    .observeOn(AndroidSchedulers.mainThread())
@@ -182,6 +180,7 @@ public class TrackListingFragment extends Fragment {
     class TrackAdapter extends RecyclerView.Adapter<TrackViewHolder> {
 
         private Album[] data;
+        private int     artSize;
 
         public TrackAdapter() {
             data = new Album[0];
@@ -194,6 +193,9 @@ public class TrackListingFragment extends Fragment {
 
         @Override
         public TrackViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            DisplayMetrics metrics = getActivity().getResources().getDisplayMetrics();
+            artSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, metrics);
+
             LayoutInflater inflater = LayoutInflater.from(getActivity());
             View v;
             switch (endpoint) {
@@ -223,14 +225,14 @@ public class TrackListingFragment extends Fragment {
                 // If we've already cached the art, load it into the image view
                 Picasso.with(getActivity())
                        .load(art)
-                       .resize(100, 100)
+                       .resize(artSize, artSize)
                        .centerCrop()
                        .into(holder.albumArt);
             } else {
                 // We don't have a cached copy, load load a default
                 Picasso.with(getActivity())
                        .load(R.drawable.ic_launcher)
-                       .resize(100, 100)
+                       .resize(artSize, artSize)
                        .centerCrop()
                        .into(holder.albumArt);
 
@@ -256,7 +258,7 @@ public class TrackListingFragment extends Fragment {
                            // runs on the main thread
                            holder.albumArt.post(() -> Picasso.with(getActivity())
                                                              .load(art)
-                                                             .resize(100, 100)
+                                                             .resize(artSize, artSize)
                                                              .centerCrop()
                                                              .into(holder.albumArt));
                        } catch (IOException e) {
