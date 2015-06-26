@@ -3,7 +3,11 @@ package com.bronytunes.app;
 import android.app.Application;
 import android.content.Context;
 
-import java.util.concurrent.TimeUnit;
+import com.bronytunes.app.ui.ActivityHierarchyServer;
+import com.bronytunes.app.data.LumberYard;
+import com.squareup.leakcanary.LeakCanary;
+
+import javax.inject.Inject;
 
 import timber.log.Timber;
 
@@ -14,6 +18,11 @@ import timber.log.Timber;
  */
 public class BronyTunesApp extends Application {
 
+    @Inject
+    ActivityHierarchyServer activityHierarchyServer;
+    @Inject
+    LumberYard              lumberYard;
+
     private BronyTunesComponent objectGraph;
 
     public static BronyTunesApp get(Context context) {
@@ -23,29 +32,22 @@ public class BronyTunesApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        LeakCanary.install(this);
 
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
-        } else {
-            // TODO Crashalytics
-        }
-
-        buildObjectGraphAndInject();
-    }
-
-    public void buildObjectGraphAndInject() {
-        long start = System.nanoTime();
-
-        if (BuildConfig.DEBUG) {
             objectGraph = DaggerDebugBronyTunesComponent.builder()
                                                         .build();
         } else {
+            // TODO Crashalytics
             objectGraph = DaggerBronyTunesComponent.builder()
                                                    .build();
         }
 
-        long diff = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - start);
-        Timber.i("Global object graph creation took %sms", diff);
+        lumberYard.cleanUp();
+        Timber.plant(lumberYard.tree());
+
+        registerActivityLifecycleCallbacks(activityHierarchyServer);
     }
 
     public BronyTunesComponent getObjectGraph() {
