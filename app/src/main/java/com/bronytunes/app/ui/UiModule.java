@@ -5,9 +5,6 @@ import dagger.Module;
 /**
  * Created by berwyn on 03/09/14.
  */
-@Module(
-        complete = false,
-        library = true
-)
+@Module
 public class UiModule {
 }

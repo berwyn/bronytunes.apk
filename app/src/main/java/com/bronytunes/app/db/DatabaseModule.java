@@ -10,12 +10,7 @@ import dagger.Provides;
 /**
  * An injector module for DB-related classes
  */
-@Module(
-        injects = {
-        },
-        complete = false,
-        library = true
-)
+@Module
 public class DatabaseModule {
 
     /**

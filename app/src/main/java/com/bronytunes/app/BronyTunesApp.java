@@ -5,7 +5,6 @@ import android.content.Context;
 
 import java.util.concurrent.TimeUnit;
 
-import dagger.ObjectGraph;
 import timber.log.Timber;
 
 /**
@@ -15,7 +14,11 @@ import timber.log.Timber;
  */
 public class BronyTunesApp extends Application {
 
-    private ObjectGraph objectGraph;
+    private BronyTunesComponent objectGraph;
+
+    public static BronyTunesApp get(Context context) {
+        return (BronyTunesApp) context.getApplicationContext();
+    }
 
     @Override
     public void onCreate() {
@@ -33,18 +36,19 @@ public class BronyTunesApp extends Application {
     public void buildObjectGraphAndInject() {
         long start = System.nanoTime();
 
-        objectGraph = ObjectGraph.create(Modules.list(this));
-        objectGraph.inject(this);
+        if (BuildConfig.DEBUG) {
+            objectGraph = DaggerDebugBronyTunesComponent.builder()
+                                                        .build();
+        } else {
+            objectGraph = DaggerBronyTunesComponent.builder()
+                                                   .build();
+        }
 
         long diff = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - start);
         Timber.i("Global object graph creation took %sms", diff);
     }
 
-    public void inject(Object o) {
-        objectGraph.inject(o);
-    }
-
-    public static BronyTunesApp get(Context context) {
-        return (BronyTunesApp) context.getApplicationContext();
+    public BronyTunesComponent getObjectGraph() {
+        return objectGraph;
     }
 }

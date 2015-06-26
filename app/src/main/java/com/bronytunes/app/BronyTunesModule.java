@@ -19,12 +19,7 @@ import dagger.Provides;
         includes = {
                 DatabaseModule.class,
                 NetModule.class
-        },
-        injects = {
-                BronyTunesApp.class
-        },
-        complete = false,
-        library = true
+        }
 )
 public class BronyTunesModule {
 

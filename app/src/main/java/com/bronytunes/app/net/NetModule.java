@@ -13,13 +13,7 @@ import retrofit.RestAdapter;
 /**
  * Created by berwyn on 03/09/14.
  */
-@Module(
-        injects = {
-                TrackListingFragment.class
-        },
-        complete = false,
-        library = true
-)
+@Module
 public class NetModule {
 
     @Provides

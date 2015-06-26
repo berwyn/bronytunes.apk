@@ -8,13 +8,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.astuetz.PagerSlidingTabStrip;
 import com.bronytunes.app.R;
 
 import java.util.Locale;
@@ -38,8 +34,6 @@ public class MainActivity extends ActionBarActivity implements TrackListingFragm
     Toolbar              toolbar;
     @InjectView(R.id.pager)
     ViewPager            viewPager;
-    @InjectView(R.id.tabs)
-    PagerSlidingTabStrip tabs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +49,6 @@ public class MainActivity extends ActionBarActivity implements TrackListingFragm
 
         // Set up the ViewPager with the sections adapter.
         viewPager.setAdapter(mSectionsPagerAdapter);
-        tabs.setViewPager(viewPager);
     }
 
 

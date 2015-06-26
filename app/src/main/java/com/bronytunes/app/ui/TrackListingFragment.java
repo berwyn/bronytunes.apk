@@ -159,7 +159,7 @@ public class TrackListingFragment extends Fragment {
         }
 
         BronyTunesApp app = BronyTunesApp.get(activity);
-        app.inject(this);
+        api = app.getObjectGraph().getAPI();
     }
 
     @Override

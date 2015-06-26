@@ -36,7 +36,7 @@ public class TrackProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         BronyTunesApp app = BronyTunesApp.get(getContext());
-        app.inject(this);
+        trackDB = app.getObjectGraph().getTrackDatabaseHelper();
         return true;
     }
 
