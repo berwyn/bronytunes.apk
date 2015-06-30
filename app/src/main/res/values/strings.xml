@@ -11,4 +11,8 @@
 
     <string name="hello_blank_fragment">Hello, Blank Fragment!</string>
 
+    <string name="title_bug_capture">Report a bug</string>
+    <string name="btn_submit">Submit</string>
+    <string name="btn_cancel">Cancel</string>
+
 </resources>
