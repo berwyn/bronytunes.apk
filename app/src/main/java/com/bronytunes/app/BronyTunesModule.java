@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.bronytunes.app.data.DataModule;
 import com.bronytunes.app.db.DatabaseModule;
 import com.bronytunes.app.net.NetModule;
 
@@ -17,6 +18,7 @@ import dagger.Provides;
  */
 @Module(
         includes = {
+                DataModule.class,
                 DatabaseModule.class,
                 NetModule.class
         }

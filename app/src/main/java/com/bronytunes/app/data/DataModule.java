@@ -2,6 +2,7 @@ package com.bronytunes.app.data;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
@@ -40,6 +41,12 @@ public class DataModule {
     Gson provideGson() {
         return new GsonBuilder()
                 .create();
+    }
+
+    @Provides
+    @Singleton
+    IntentFactory provideIntentFactory() {
+        return IntentFactory.REAL;
     }
 
     @Provides
