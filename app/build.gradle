@@ -124,16 +124,6 @@ android.applicationVariants.all { variant ->
     if(variant.install == null)
         return
 
-    println variant.name
-    println variant.getMergeResources().getRawInputFolders().each { filetree ->
-        if(filetree.toPath().contains('internalDebug')) {
-            filetree.visit { subfolder ->
-                println subfolder
-            }
-        }
-    }
-    println "\n\n"
-
     installAll.dependsOn(variant.install)
     // Ensure we end up in the same group as the other install tasks.
     installAll.group = variant.install.group
