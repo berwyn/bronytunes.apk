@@ -38,10 +38,6 @@ android {
     }
 
     buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-        }
         debug {
             applicationIdSuffix '.debug'
             versionNameSuffix '-DEBUG'
@@ -120,4 +116,30 @@ dependencies {
     }
     androidTestCompile 'com.android.support.test:runner:0.3'
     androidTestCompile 'com.android.support.test:rules:0.3'
+}
+
+def installAll = tasks.create('installAll')
+installAll.description = 'Install all applications.'
+android.applicationVariants.all { variant ->
+    if(variant.install == null)
+        return
+
+    println variant.name
+    println variant.getMergeResources().getRawInputFolders().each { filetree ->
+        if(filetree.toPath().contains('internalDebug')) {
+            filetree.visit { subfolder ->
+                println subfolder
+            }
+        }
+    }
+    println "\n\n"
+
+    installAll.dependsOn(variant.install)
+    // Ensure we end up in the same group as the other install tasks.
+    installAll.group = variant.install.group
+}
+
+// The default 'assemble' task only applies to normal variants. Add test variants as well.
+android.testVariants.all { variant ->
+    tasks.getByName('assemble').dependsOn variant.assemble
 }

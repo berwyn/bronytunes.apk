@@ -8,7 +8,7 @@
     </declare-styleable>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme.BronyTunes" parent="Theme.AppCompat.Light.NoActionBar">
 
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -19,13 +19,6 @@
         <item name="windowActionBar">false</item>
     </style>
 
-    <!--<style name="AppTheme.OverlayActionBar" parent="AppTheme">-->
-        <!--<item name="android:windowActionBarOverlay">true</item>-->
-        <!--<item name="android:actionBarStyle">@style/AppTheme.OverlayActionBar.ActionBar</item>-->
-    <!--</style>-->
-
-    <!--<style name="AppTheme.OverlayActionBar.ActionBar" parent="android:Widget.Holo.Light.ActionBar.Solid.Inverse">-->
-        <!--<item name="android:background">@android:color/transparent</item>-->
-    <!--</style>-->
+    <style name="None" />
 
 </resources>
