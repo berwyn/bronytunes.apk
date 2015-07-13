@@ -1,4 +1,4 @@
-package com.bronytunes.app;
+package com.bronytunes.app.ui;
 
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -11,6 +11,7 @@ import android.text.style.StyleSpan;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.bronytunes.app.R;
 import com.bronytunes.app.ui.misc.Truss;
 import com.bronytunes.app.util.Intents;
 
@@ -35,7 +36,7 @@ public class ExternalIntentActivity extends AppCompatActivity implements Toolbar
     }
 
     @InjectView(R.id.toolbar)
-    Toolbar toolbarView;
+    Toolbar  toolbarView;
     @InjectView(R.id.action)
     TextView actionView;
     @InjectView(R.id.data)
@@ -62,9 +63,9 @@ public class ExternalIntentActivity extends AppCompatActivity implements Toolbar
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.debug_launch:
-                if(Intents.maybeStartActivity(this, baseIntent)) {
+                if (Intents.maybeStartActivity(this, baseIntent)) {
                     finish();
                 }
                 return true;
@@ -75,12 +76,12 @@ public class ExternalIntentActivity extends AppCompatActivity implements Toolbar
 
     public void fillAction() {
         String action = baseIntent.getAction();
-        actionView.setText(action == null? "None!":action);
+        actionView.setText(action == null ? "None!" : action);
     }
 
     public void fillData() {
         Uri data = baseIntent.getData();
-        dataView.setText(data == null? "None!":data.toString());
+        dataView.setText(data == null ? "None!" : data.toString());
     }
 
     public void fillExtras() {

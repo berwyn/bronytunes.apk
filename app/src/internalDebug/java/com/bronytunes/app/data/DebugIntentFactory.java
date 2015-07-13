@@ -2,7 +2,7 @@ package com.bronytunes.app.data;
 
 import android.content.Intent;
 
-import com.bronytunes.app.ExternalIntentActivity;
+import com.bronytunes.app.ui.ExternalIntentActivity;
 import com.bronytunes.app.data.prefs.BooleanPreference;
 
 /**
