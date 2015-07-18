@@ -71,7 +71,7 @@ dependencies {
     compile 'com.bronytunes:java:1.0.0'
 
     compile 'com.jakewharton.timber:timber:3.1.0'
-    compile 'com.jakewharton:butterknife:6.1.0'
+    compile 'com.jakewharton:butterknife:7.0.0'
     compile 'com.jakewharton.byteunits:byteunits:0.9.0'
 
     compile 'com.squareup.okhttp:okhttp:2.4.0'
