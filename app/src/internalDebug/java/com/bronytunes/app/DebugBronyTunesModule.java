@@ -26,7 +26,8 @@ public final class DebugBronyTunesModule {
 
     @Provides
     @Singleton
-    @IsInstrumentationTest boolean provideIsInstrumentationTest() {
+    @IsInstrumentationTest
+    boolean provideIsInstrumentationTest() {
         return instrumentationTest;
     }
 }

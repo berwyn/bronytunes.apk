@@ -1,12 +1,10 @@
-package com.jakewharton.u2020;
-
-import com.bronytunes.app.BronyTunesModule;
+package com.bronytunes.app;
 
 final class Modules {
-  static Object[] list(U2020App app) {
+  static Object[] list(BronyTunesApp app) {
     return new Object[] {
         new BronyTunesModule(app),
-        new InternalReleaseBronyTunesModule()
+        new com.jakewharton.u2020.InternalReleaseBronyTunesModule()
     };
   }
 

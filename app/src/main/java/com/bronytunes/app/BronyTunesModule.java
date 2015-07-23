@@ -5,6 +5,7 @@ import android.app.Application;
 import com.bronytunes.app.data.DataModule;
 import com.bronytunes.app.db.DatabaseModule;
 import com.bronytunes.app.ui.MainActivity;
+import com.bronytunes.app.ui.UiModule;
 
 import javax.inject.Singleton;
 
@@ -16,6 +17,7 @@ import dagger.Provides;
  */
 @Module(
         includes = {
+                UiModule.class,
                 DataModule.class,
                 DatabaseModule.class
         },

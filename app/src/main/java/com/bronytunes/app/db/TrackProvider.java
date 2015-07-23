@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
 import com.bronytunes.app.BronyTunesApp;
+import com.bronytunes.app.data.Injector;
 
 import javax.inject.Inject;
 
@@ -35,8 +36,7 @@ public class TrackProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        BronyTunesApp app = BronyTunesApp.get(getContext());
-        trackDB = app.getObjectGraph().getTrackDatabaseHelper();
+        Injector.obtain(getContext()).inject(this);
         return true;
     }
 

@@ -1,6 +1,7 @@
 package com.bronytunes.app.data;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 
@@ -33,8 +34,8 @@ import timber.log.Timber;
  * Created by berwyn on 22/07/2015.
  */
 @Module(
-        includes = DebugApiModule.class,
-        complete = true,
+        includes = {DebugApiModule.class},
+        complete = false,
         library = true,
         overrides = true
 )
@@ -214,12 +215,7 @@ public class DebugDataModule {
         if (isMockMode) {
             builder.addRequestHandler(new MockRequestHandler(mockRestAdapter, app.getAssets()));
         }
-        builder.listener(new Picasso.Listener() {
-            @Override
-            public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
-                Timber.e(exception, "Error while loading image " + uri);
-            }
-        });
+        builder.listener((picasso, uri, exception) -> Timber.e(exception, "Error while loading image " + uri));
         return builder.build();
     }
 }

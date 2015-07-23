@@ -157,8 +157,6 @@ public class TrackListingFragment extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement TrackListingCallbacks");
         }
-
-        BronyTunesApp app = BronyTunesApp.get(activity);
     }
 
     @Override

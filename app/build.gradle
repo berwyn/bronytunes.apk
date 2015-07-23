@@ -18,7 +18,7 @@ android {
     buildToolsVersion '22.0.1'
 
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 22
 
         versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
@@ -71,7 +71,7 @@ dependencies {
     compile 'com.bronytunes:java:1.0.0'
 
     compile 'com.jakewharton.timber:timber:3.1.0'
-    compile 'com.jakewharton:butterknife:7.0.0'
+    compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.jakewharton.byteunits:byteunits:0.9.0'
 
     compile 'com.squareup.okhttp:okhttp:2.4.0'
@@ -105,6 +105,7 @@ dependencies {
     internalDebugCompile 'com.jakewharton.madge:madge:1.1.2'
     internalDebugCompile 'com.jakewharton.scalpel:scalpel:1.1.2'
     internalDebugCompile 'com.squareup.retrofit:retrofit-mock:1.9.0'
+    internalDebugCompile 'com.jakewharton:process-phoenix:1.0.0'
 
     androidTestCompile 'junit:junit:4.12'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2'
@@ -133,4 +134,9 @@ android.applicationVariants.all { variant ->
 // The default 'assemble' task only applies to normal variants. Add test variants as well.
 android.testVariants.all { variant ->
     tasks.getByName('assemble').dependsOn variant.assemble
+}
+
+configurations.all {
+    // Currently espresso is dependent on support-annotations:22.2.0
+    resolutionStrategy.force 'com.android.support:support-annotations:22.2.1'
 }

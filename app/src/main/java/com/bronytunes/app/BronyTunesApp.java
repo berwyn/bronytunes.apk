@@ -1,7 +1,6 @@
 package com.bronytunes.app;
 
 import android.app.Application;
-import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.bronytunes.app.data.Injector;
@@ -21,7 +20,7 @@ import timber.log.Timber;
  * application launches and hosts the object graph for
  * dependency injection.
  */
-public class BronyTunesApp extends Application {
+public final class BronyTunesApp extends Application {
 
     @Inject
     ActivityHierarchyServer activityHierarchyServer;
@@ -36,7 +35,7 @@ public class BronyTunesApp extends Application {
         JodaTimeAndroid.init(this);
         LeakCanary.install(this);
 
-        if(BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         } else {
             // Crashalytics
@@ -51,7 +50,8 @@ public class BronyTunesApp extends Application {
         registerActivityLifecycleCallbacks(activityHierarchyServer);
     }
 
-    @Override public Object getSystemService(@NonNull String name) {
+    @Override
+    public Object getSystemService(@NonNull String name) {
         if (Injector.matchesService(name)) {
             return objectGraph;
         }

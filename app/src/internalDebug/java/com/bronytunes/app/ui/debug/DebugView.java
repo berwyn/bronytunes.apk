@@ -44,6 +44,7 @@ import com.bronytunes.app.ui.logs.LogsDialog;
 import com.bronytunes.app.ui.misc.EnumAdapter;
 import com.bronytunes.app.util.Keyboards;
 import com.bronytunes.app.util.Strings;
+import com.jakewharton.processphoenix.ProcessPhoenix;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.picasso.Picasso;
