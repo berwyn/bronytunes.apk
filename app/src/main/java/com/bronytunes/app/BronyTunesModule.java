@@ -1,12 +1,10 @@
 package com.bronytunes.app;
 
 import android.app.Application;
-import android.content.Context;
-import android.content.SharedPreferences;
 
 import com.bronytunes.app.data.DataModule;
 import com.bronytunes.app.db.DatabaseModule;
-import com.bronytunes.app.net.NetModule;
+import com.bronytunes.app.ui.MainActivity;
 
 import javax.inject.Singleton;
 
@@ -19,13 +17,17 @@ import dagger.Provides;
 @Module(
         includes = {
                 DataModule.class,
-                DatabaseModule.class,
-                NetModule.class
+                DatabaseModule.class
+        },
+        injects = {
+                BronyTunesApp.class,
+                MainActivity.class
         }
 )
 public class BronyTunesModule {
 
     private final BronyTunesApp app;
+
     public BronyTunesModule(BronyTunesApp app) {
         this.app = app;
     }
@@ -34,12 +36,6 @@ public class BronyTunesModule {
     @Singleton
     Application provideApplication() {
         return app;
-    }
-
-    @Provides
-    @Singleton
-    SharedPreferences provideSharedPrefs(Application app) {
-        return app.getSharedPreferences("bronytunes", Context.MODE_PRIVATE);
     }
 
 }

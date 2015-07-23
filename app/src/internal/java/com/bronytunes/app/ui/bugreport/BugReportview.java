@@ -11,21 +11,21 @@ import com.bronytunes.app.R;
 import com.bronytunes.app.ui.misc.EmptyTextWatcher;
 import com.bronytunes.app.util.Strings;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 /**
  * With <3 from JakeWharton/u2020
  */
 public class BugReportview extends LinearLayout {
 
-    @InjectView(R.id.title)
+    @Bind(R.id.title)
     EditText titleView;
-    @InjectView(R.id.description)
+    @Bind(R.id.description)
     EditText descriptionView;
-    @InjectView(R.id.screenshot)
+    @Bind(R.id.screenshot)
     CheckBox screenshotView;
-    @InjectView(R.id.logs)
+    @Bind(R.id.logs)
     CheckBox logsView;
 
     public interface ReportDetailsListener {
@@ -41,10 +41,10 @@ public class BugReportview extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         titleView.setOnFocusChangeListener((v, hasFocus) -> {
-            if(!hasFocus) {
+            if (!hasFocus) {
                 titleView.setError(Strings.isBlank(titleView.getText())? "Cannot be empty" : null);
             }
         });

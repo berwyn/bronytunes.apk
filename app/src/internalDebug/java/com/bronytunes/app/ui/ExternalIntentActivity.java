@@ -17,8 +17,8 @@ import com.bronytunes.app.util.Intents;
 
 import java.util.Arrays;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 /**
  * With <3 from JakeWharton/u2020
@@ -35,13 +35,13 @@ public class ExternalIntentActivity extends AppCompatActivity implements Toolbar
         return intent;
     }
 
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar  toolbarView;
-    @InjectView(R.id.action)
+    @Bind(R.id.action)
     TextView actionView;
-    @InjectView(R.id.data)
+    @Bind(R.id.data)
     TextView dataView;
-    @InjectView(R.id.extras)
+    @Bind(R.id.extras)
     TextView extrasView;
 
     private Intent baseIntent;
@@ -50,7 +50,7 @@ public class ExternalIntentActivity extends AppCompatActivity implements Toolbar
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
         setContentView(R.layout.activity_external_intent);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         toolbarView.inflateMenu(R.menu.menu_external_intent);
         toolbarView.setOnMenuItemClickListener(this);

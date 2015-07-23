@@ -3,6 +3,7 @@ package com.bronytunes.app.ui;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,9 +31,8 @@ import java.util.Arrays;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.Optional;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
@@ -55,7 +55,7 @@ public class TrackListingFragment extends Fragment {
 
     @Inject
     API          api;
-    @InjectView(R.id.list)
+    @Bind(R.id.list)
     RecyclerView listView;
 
     private int                        endpoint;
@@ -63,6 +63,10 @@ public class TrackListingFragment extends Fragment {
     private TrackAdapter               adapter;
 
     private TrackListeningCallbacks mListener;
+
+    public TrackListingFragment() {
+        // Required empty public constructor
+    }
 
     /**
      * Creates a new fragment instance for the given endpoint
@@ -78,10 +82,6 @@ public class TrackListingFragment extends Fragment {
         return fragment;
     }
 
-    public TrackListingFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +95,7 @@ public class TrackListingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_track_listing, container, false);
-        ButterKnife.inject(this, layout);
+        ButterKnife.bind(this, layout);
 
         adapter = new TrackAdapter();
 
@@ -159,7 +159,6 @@ public class TrackListingFragment extends Fragment {
         }
 
         BronyTunesApp app = BronyTunesApp.get(activity);
-        api = app.getObjectGraph().getAPI();
     }
 
     @Override
@@ -294,19 +293,19 @@ public class TrackListingFragment extends Fragment {
 
     class TrackViewHolder extends RecyclerView.ViewHolder {
 
-        @InjectView(R.id.albumName)
+        @Bind(R.id.albumName)
         TextView  albumName;
-        @InjectView(R.id.artistName)
+        @Bind(R.id.artistName)
         TextView  artistName;
-        @InjectView(R.id.albumArt)
+        @Bind(R.id.albumArt)
         ImageView albumArt;
-        @Optional
-        @InjectView(R.id.trendText)
+        @Nullable
+        @Bind(R.id.trendText)
         TextView  trendNumber;
 
         public TrackViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

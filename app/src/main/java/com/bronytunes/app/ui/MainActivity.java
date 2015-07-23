@@ -8,15 +8,21 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 
 import com.bronytunes.app.R;
+import com.bronytunes.app.data.Injector;
 
 import java.util.Locale;
 
+import javax.inject.Inject;
+
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import dagger.ObjectGraph;
 
 public class MainActivity extends ActionBarActivity implements TrackListingFragment.TrackListeningCallbacks {
 
@@ -30,17 +36,28 @@ public class MainActivity extends ActionBarActivity implements TrackListingFragm
      */
     SectionsPagerAdapter mSectionsPagerAdapter;
 
-    @InjectView(R.id.action_bar)
-    Toolbar              toolbar;
-    @InjectView(R.id.pager)
-    ViewPager            viewPager;
+    @Bind(R.id.action_bar)
+    Toolbar   toolbar;
+    @Bind(R.id.pager)
+    ViewPager viewPager;
+
+    @Inject
+    AppContainer appContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ButterKnife.inject(this);
+        // Explicitly reference the application object since we don't want to match our own injector.
+        ObjectGraph appGraph = Injector.obtain(getApplication());
+        appGraph.inject(this);
+
+        ViewGroup container = appContainer.bind(this);
+
+        LayoutInflater inflater = getLayoutInflater();
+        inflater.inflate(R.layout.activity_main, container);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
         // Create the adapter that will return a fragment for each of the three

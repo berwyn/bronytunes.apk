@@ -2,13 +2,18 @@ package com.bronytunes.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
-import com.bronytunes.app.ui.ActivityHierarchyServer;
+import com.bronytunes.app.data.Injector;
 import com.bronytunes.app.data.LumberYard;
+import com.bronytunes.app.ui.ActivityHierarchyServer;
 import com.squareup.leakcanary.LeakCanary;
+
+import net.danlew.android.joda.JodaTimeAndroid;
 
 import javax.inject.Inject;
 
+import dagger.ObjectGraph;
 import timber.log.Timber;
 
 /**
@@ -23,26 +28,22 @@ public class BronyTunesApp extends Application {
     @Inject
     LumberYard              lumberYard;
 
-    private BronyTunesComponent objectGraph;
-
-    public static BronyTunesApp get(Context context) {
-        return (BronyTunesApp) context.getApplicationContext();
-    }
+    private ObjectGraph objectGraph;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        JodaTimeAndroid.init(this);
         LeakCanary.install(this);
 
-        if (BuildConfig.DEBUG) {
+        if(BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
-            objectGraph = DaggerDebugBronyTunesComponent.builder()
-                                                        .build();
         } else {
-            // TODO Crashalytics
-            objectGraph = DaggerBronyTunesComponent.builder()
-                                                   .build();
+            // Crashalytics
         }
+
+        objectGraph = ObjectGraph.create(Modules.list(this));
+        objectGraph.inject(this);
 
         lumberYard.cleanUp();
         Timber.plant(lumberYard.tree());
@@ -50,7 +51,10 @@ public class BronyTunesApp extends Application {
         registerActivityLifecycleCallbacks(activityHierarchyServer);
     }
 
-    public BronyTunesComponent getObjectGraph() {
-        return objectGraph;
+    @Override public Object getSystemService(@NonNull String name) {
+        if (Injector.matchesService(name)) {
+            return objectGraph;
+        }
+        return super.getSystemService(name);
     }
 }

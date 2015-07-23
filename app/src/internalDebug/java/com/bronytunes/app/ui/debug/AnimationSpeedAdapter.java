@@ -18,17 +18,17 @@ public class AnimationSpeedAdapter extends BindableAdapter<Integer> {
             1, 2, 3, 5, 10
     };
 
-    public static int positionForValue(int value) {
-        for(int i = 0, len = VALUES.length; i < len; i++) {
-            if(VALUES[i] == value) {
+    AnimationSpeedAdapter(Context context) {
+        super(context);
+    }
+
+    public static int getPositionForValue(int value) {
+        for (int i = 0; i < VALUES.length; i++) {
+            if (VALUES[i] == value) {
                 return i;
             }
         }
-        return 0;
-    }
-
-    AnimationSpeedAdapter(Context context) {
-        super(context);
+        return 0; // Default to 1x if something changes.
     }
 
     @Override
@@ -54,10 +54,10 @@ public class AnimationSpeedAdapter extends BindableAdapter<Integer> {
     @Override
     public void bindView(Integer item, int position, View view) {
         TextView tv = findById(view, android.R.id.text1);
-        if(item == 1) {
+        if (item == 1) {
             tv.setText("Normal");
         } else {
-            tv.setText(item + "x Slower");
+            tv.setText(item + "x slower");
         }
     }
 
