@@ -5,6 +5,7 @@ import android.app.Application;
 import com.bronytunes.app.data.DataModule;
 import com.bronytunes.app.db.DatabaseModule;
 import com.bronytunes.app.ui.MainActivity;
+import com.bronytunes.app.ui.TrackListingFragment;
 import com.bronytunes.app.ui.UiModule;
 
 import javax.inject.Singleton;
@@ -23,7 +24,8 @@ import dagger.Provides;
         },
         injects = {
                 BronyTunesApp.class,
-                MainActivity.class
+                MainActivity.class,
+                TrackListingFragment.class
         }
 )
 public class BronyTunesModule {

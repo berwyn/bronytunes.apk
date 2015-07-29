@@ -97,7 +97,7 @@ public final class DebugAppContainer implements AppContainer {
     viewHolder.content.setOnHierarchyChangeListener(
             HierarchyTreeChangeListener.wrap(contextualActions));
 
-    viewHolder.drawerLayout.setDrawerShadow(R.drawable.debug_drawer_shadow, Gravity.END);
+    viewHolder.drawerLayout.setDrawerShadow(R.drawable.debug_drawer_shadow, GravityCompat.END);
     viewHolder.drawerLayout.setDrawerListener(new DebugDrawerLayout.SimpleDrawerListener() {
       @Override public void onDrawerOpened(View drawerView) {
         debugView.onDrawerOpened();

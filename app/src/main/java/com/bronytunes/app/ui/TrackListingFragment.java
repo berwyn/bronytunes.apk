@@ -1,6 +1,7 @@
 package com.bronytunes.app.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import com.bronytunes.API;
 import com.bronytunes.app.BronyTunesApp;
 import com.bronytunes.app.R;
+import com.bronytunes.app.data.Injector;
 import com.bronytunes.model.Album;
 import com.squareup.picasso.Picasso;
 
@@ -74,8 +76,10 @@ public class TrackListingFragment extends Fragment {
      * @param endpoint {@link #ENDPOINT_FEATURED} | {@link #ENDPOINT_TRENDING} | {@link #ENDPOINT_NEW}
      * @return A new instance of the fragment for the specified endpoint
      */
-    public static TrackListingFragment newInstance(int endpoint) {
+    public static TrackListingFragment newInstance(int endpoint, Context ctxt) {
         TrackListingFragment fragment = new TrackListingFragment();
+        Injector.obtain(ctxt).inject(fragment);
+
         Bundle args = new Bundle();
         args.putInt(ARG_ENDPOINT, endpoint);
         fragment.setArguments(args);

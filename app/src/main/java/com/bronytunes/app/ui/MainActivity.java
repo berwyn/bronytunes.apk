@@ -2,11 +2,12 @@ package com.bronytunes.app.ui;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,7 +25,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import dagger.ObjectGraph;
 
-public class MainActivity extends ActionBarActivity implements TrackListingFragment.TrackListeningCallbacks {
+public class MainActivity extends AppCompatActivity implements TrackListingFragment.TrackListeningCallbacks {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -44,14 +45,24 @@ public class MainActivity extends ActionBarActivity implements TrackListingFragm
     @Inject
     AppContainer appContainer;
 
+    private ObjectGraph activityGraph;
+
+    @Override
+    public Object getSystemService(@NonNull String name) {
+        if (Injector.matchesService(name)) {
+            return activityGraph;
+        }
+        return super.getSystemService(name);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         // Explicitly reference the application object since we don't want to match our own injector.
-        ObjectGraph appGraph = Injector.obtain(getApplication());
-        appGraph.inject(this);
+        activityGraph = Injector.obtain(getApplication());
+        activityGraph.inject(this);
 
         ViewGroup container = appContainer.bind(this);
 
@@ -109,9 +120,9 @@ public class MainActivity extends ActionBarActivity implements TrackListingFragm
             super(fm);
 
             fragments = new TrackListingFragment[]{
-                    TrackListingFragment.newInstance(TrackListingFragment.ENDPOINT_FEATURED),
-                    TrackListingFragment.newInstance(TrackListingFragment.ENDPOINT_TRENDING),
-                    TrackListingFragment.newInstance(TrackListingFragment.ENDPOINT_NEW)
+                    TrackListingFragment.newInstance(TrackListingFragment.ENDPOINT_FEATURED, MainActivity.this),
+                    TrackListingFragment.newInstance(TrackListingFragment.ENDPOINT_TRENDING, MainActivity.this),
+                    TrackListingFragment.newInstance(TrackListingFragment.ENDPOINT_NEW, MainActivity.this)
             };
         }
 

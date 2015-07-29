@@ -212,6 +212,7 @@ public final class DebugView extends FrameLayout {
 
     public DebugView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
         Injector.obtain(context).inject(this);
 
         // Inflate all of the controls and inject them.

@@ -8,7 +8,7 @@ import dagger.ObjectGraph;
  * Created by berwyn on 22/07/2015.
  */
 public final class Injector {
-    private static final String INJECTOR_SERVICE = "com.jakewharton.u2020.injector";
+    private static final String INJECTOR_SERVICE = "com.bronytunes.app.injector";
 
     @SuppressWarnings("ResourceType") // Explicitly doing a custom service.
     public static ObjectGraph obtain(Context context) {
