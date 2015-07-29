@@ -3,10 +3,13 @@ package com.bronytunes.app.ui;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -38,13 +41,16 @@ public class MainActivity extends AppCompatActivity implements TrackListingFragm
     SectionsPagerAdapter mSectionsPagerAdapter;
 
     @Bind(R.id.action_bar)
-    Toolbar   toolbar;
-    @Bind(R.id.pager)
-    ViewPager viewPager;
+    Toolbar        toolbar;
+    @Bind(R.id.drawer_layout)
+    DrawerLayout   drawer;
+    @Bind(R.id.nav_view)
+    NavigationView nav;
 
     @Inject
     AppContainer appContainer;
 
+    private String[]    tabLabels;
     private ObjectGraph activityGraph;
 
     @Override
@@ -58,25 +64,22 @@ public class MainActivity extends AppCompatActivity implements TrackListingFragm
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         // Explicitly reference the application object since we don't want to match our own injector.
         activityGraph = Injector.obtain(getApplication());
         activityGraph.inject(this);
 
         ViewGroup container = appContainer.bind(this);
-
         LayoutInflater inflater = getLayoutInflater();
         inflater.inflate(R.layout.activity_main, container);
+
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+        setupDrawerContent();
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-        // Set up the ViewPager with the sections adapter.
-        viewPager.setAdapter(mSectionsPagerAdapter);
+        final ActionBar ab = getSupportActionBar();
+        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        ab.setDisplayHomeAsUpEnabled(true);
     }
 
 
@@ -92,19 +95,28 @@ public class MainActivity extends AppCompatActivity implements TrackListingFragm
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                return true;
+            case android.R.id.home:
+                drawer.openDrawer(GravityCompat.START);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onFragmentInteraction(Uri uri) {
         // TODO - Fragment callback fleshout
+    }
+
+    private void setupDrawerContent() {
+        nav.setNavigationItemSelectedListener(menuItem -> {
+            menuItem.setChecked(true);
+            drawer.closeDrawers();
+            return true;
+        });
     }
 
 
@@ -139,15 +151,7 @@ public class MainActivity extends AppCompatActivity implements TrackListingFragm
         @Override
         public CharSequence getPageTitle(int position) {
             Locale l = Locale.getDefault();
-            switch (position) {
-                case 0:
-                    return getString(R.string.title_frag_featured).toUpperCase(l);
-                case 1:
-                    return getString(R.string.title_frag_trending).toUpperCase(l);
-                case 2:
-                    return getString(R.string.title_frag_new).toUpperCase(l);
-            }
-            return null;
+            return tabLabels[position].toUpperCase(l);
         }
     }
 }

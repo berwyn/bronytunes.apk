@@ -4,7 +4,7 @@
     <string name="app_name">BronyTunes</string>
     <string name="action_settings">Settings</string>
 
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">BronyTunes</string>
     <string name="title_frag_featured">Featured</string>
     <string name="title_frag_trending">Trending</string>
     <string name="title_frag_new">New</string>
@@ -14,5 +14,11 @@
     <string name="title_bug_capture">Report a bug</string>
     <string name="btn_submit">Submit</string>
     <string name="btn_cancel">Cancel</string>
+
+    <string-array name="label_main_tabs">
+        <item>Featured</item>
+        <item>Trending</item>
+        <item>New</item>
+    </string-array>
 
 </resources>

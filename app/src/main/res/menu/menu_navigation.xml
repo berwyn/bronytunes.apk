@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/listen_now"
+            android:title="Listen Now"/>
+        <item
+            android:id="@+id/library"
+            android:title="Library" />
+    </group>
+
+    <item android:title="Sub Items">
+        <menu>
+            <item
+                android:id="@+id/settings"
+                android:title="Settings"/>
+            <item
+                android:id="@+id/offline_mode"
+                android:checkable="true"
+                android:checked="false"
+                android:title="Offline mode" />
+        </menu>
+    </item>
+</menu>
