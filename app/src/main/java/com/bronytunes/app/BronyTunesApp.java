@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.bronytunes.app.data.Injector;
 import com.bronytunes.app.data.LumberYard;
 import com.bronytunes.app.ui.ActivityHierarchyServer;
+import com.facebook.stetho.Stetho;
 import com.squareup.leakcanary.LeakCanary;
 
 import net.danlew.android.joda.JodaTimeAndroid;

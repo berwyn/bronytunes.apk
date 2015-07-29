@@ -35,6 +35,9 @@ android {
 
     packagingOptions {
         exclude 'LICENSE.txt'
+        // joda-time and commons-cli conflict
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
     }
 
     buildTypes {
@@ -106,6 +109,8 @@ dependencies {
     internalDebugCompile 'com.jakewharton.scalpel:scalpel:1.1.2'
     internalDebugCompile 'com.squareup.retrofit:retrofit-mock:1.9.0'
     internalDebugCompile 'com.jakewharton:process-phoenix:1.0.0'
+    internalDebugCompile 'com.facebook.stetho:stetho:1.1.1'
+    internalDebugCompile 'com.facebook.stetho:stetho-okhttp:1.1.1'
 
     androidTestCompile 'junit:junit:4.12'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2'
@@ -123,7 +128,7 @@ dependencies {
 def installAll = tasks.create('installAll')
 installAll.description = 'Install all applications.'
 android.applicationVariants.all { variant ->
-    if(variant.install == null)
+    if (variant.install == null)
         return
 
     installAll.dependsOn(variant.install)

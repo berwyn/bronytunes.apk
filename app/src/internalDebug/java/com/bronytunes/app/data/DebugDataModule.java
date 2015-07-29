@@ -11,6 +11,7 @@ import com.bronytunes.app.data.prefs.IntPreference;
 import com.bronytunes.app.data.prefs.NetworkProxyPreference;
 import com.bronytunes.app.data.prefs.RxSharedPreferences;
 import com.bronytunes.app.data.prefs.StringPreference;
+import com.facebook.stetho.okhttp.StethoInterceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
