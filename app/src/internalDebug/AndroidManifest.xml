@@ -24,8 +24,7 @@
     </activity>
     <activity
         android:name=".ui.ExternalIntentActivity"
-        android:theme="@style/Theme.BronyTunes.External"
-        >
+        android:theme="@style/Theme.BronyTunes.External">
       <intent-filter>
         <action android:name="org.bronytunes.app.intent.EXTERNAL_INTENT"/>
         <category android:name="android.intent.category.DEFAULT"/>

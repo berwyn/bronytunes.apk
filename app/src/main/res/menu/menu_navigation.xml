@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/page_group"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/listen_now"
-            android:title="Listen Now"/>
+            android:icon="@drawable/ic_music_note_black_48dp"
+            android:title="@string/label_listen_now"/>
+        <item
+            android:id="@+id/radio"
+            android:icon="@drawable/ic_radio_black_48dp"
+            android:title="@string/label_radio"/>
         <item
             android:id="@+id/library"
-            android:title="Library" />
+            android:icon="@drawable/ic_library_music_black_48dp"
+            android:title="@string/label_library"/>
     </group>
 
-    <item android:title="Sub Items">
-        <menu>
-            <item
-                android:id="@+id/settings"
-                android:title="Settings"/>
-            <item
-                android:id="@+id/offline_mode"
-                android:checkable="true"
-                android:checked="false"
-                android:title="Offline mode" />
-        </menu>
-    </item>
+    <group
+        android:id="@+id/activity_group"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/settings"
+            android:title="@string/label_settings"/>
+        <item
+            android:id="@+id/offline_mode"
+            android:title="@string/label_offline_mode"/>
+    </group>
 </menu>

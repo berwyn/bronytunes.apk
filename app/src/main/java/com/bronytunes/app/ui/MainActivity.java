@@ -1,12 +1,15 @@
 package com.bronytunes.app.ui;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -15,12 +18,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.bronytunes.app.R;
 import com.bronytunes.app.data.Injector;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -29,6 +35,9 @@ import butterknife.ButterKnife;
 import dagger.ObjectGraph;
 
 public class MainActivity extends AppCompatActivity implements TrackListingFragment.TrackListeningCallbacks {
+
+    private static final int    NUM_FRAGMENTS      = 3;
+    private static final String BUNDLE_KEY_FRAG_ID = "fragId";
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -46,12 +55,16 @@ public class MainActivity extends AppCompatActivity implements TrackListingFragm
     DrawerLayout   drawer;
     @Bind(R.id.nav_view)
     NavigationView nav;
+    @Bind(R.id.main_content)
+    View           content;
 
     @Inject
     AppContainer appContainer;
 
-    private String[]    tabLabels;
-    private ObjectGraph activityGraph;
+    private String[]               tabLabels;
+    private Map<Integer, Fragment> fragments; // We lazy load this to make onCreate not lag forever
+    private ObjectGraph            activityGraph;
+    private int                    fragId;
 
     @Override
     public Object getSystemService(@NonNull String name) {
@@ -62,8 +75,9 @@ public class MainActivity extends AppCompatActivity implements TrackListingFragm
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle icicle) {
+        super.onCreate(icicle);
+        fragments = new HashMap<>(NUM_FRAGMENTS);
 
         // Explicitly reference the application object since we don't want to match our own injector.
         activityGraph = Injector.obtain(getApplication());
@@ -80,8 +94,41 @@ public class MainActivity extends AppCompatActivity implements TrackListingFragm
         final ActionBar ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);
+        if(icicle != null) restoreState(icicle);
     }
 
+    private void setupDrawerContent() {
+        nav.setNavigationItemSelectedListener(menuItem -> {
+            Integer id = menuItem.getItemId();
+
+            switch (id) {
+                default:
+                    if (!fragments.containsKey(id)) {
+                        createFragment(id);
+                    }
+                    loadFragment(id, menuItem);
+                    break;
+                case R.id.offline_mode:
+                    // TODO - toggle offline mode?
+                    // Should look into action views
+                    Snackbar.make(content, menuItem.getTitle(), Snackbar.LENGTH_LONG)
+                            .show();
+                    break;
+                case R.id.settings:
+                    startActivity(new Intent(this, SettingsActivity.class));
+                    break;
+            }
+
+            drawer.closeDrawers();
+            return false;
+        });
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(BUNDLE_KEY_FRAG_ID, this.fragId);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -96,8 +143,6 @@ public class MainActivity extends AppCompatActivity implements TrackListingFragm
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                return true;
             case android.R.id.home:
                 drawer.openDrawer(GravityCompat.START);
                 return true;
@@ -111,14 +156,41 @@ public class MainActivity extends AppCompatActivity implements TrackListingFragm
         // TODO - Fragment callback fleshout
     }
 
-    private void setupDrawerContent() {
-        nav.setNavigationItemSelectedListener(menuItem -> {
-            menuItem.setChecked(true);
-            drawer.closeDrawers();
-            return true;
-        });
+    private void restoreState(@NonNull Bundle icicle) {
+        int fragId = icicle.getInt(BUNDLE_KEY_FRAG_ID, R.id.listen_now);
+        MenuItem item = nav.getMenu().findItem(this.fragId);
+        loadFragment(this.fragId, item);
     }
 
+    private void loadFragment(Integer id, MenuItem item) {
+        this.fragId = id;
+        item.setChecked(true);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_host, fragments.get(id));
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
+    private void createFragment(Integer id) {
+        Fragment frag;
+        switch (id) {
+            case R.id.listen_now:
+                // TODO - Create a new instance of the appropriate fragment
+                frag = new Fragment();
+                break;
+            case R.id.radio:
+                // TODO - Create a new instance of the appropriate fragment
+                frag = new Fragment();
+                break;
+            case R.id.library:
+                // TODO - Create a new instance of the appropriate fragment
+                frag = new Fragment();
+                break;
+            default:
+                throw new RuntimeException("Unknown drawer fragment clicked");
+        }
+        fragments.put(id, frag);
+    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
