@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 
 import com.bronytunes.API;
 import com.bronytunes.model.Album;
+import com.bronytunes.model.Artist;
 import com.bronytunes.model.Song;
 
 import javax.inject.Inject;
@@ -45,12 +46,27 @@ public class MockBronyTunesService implements API {
     }
 
     @Override
+    public Observable<Response> getLibraryRaw() {
+        return null;
+    }
+
+    @Override
+    public Observable<Artist[]> getArtists() {
+        return null;
+    }
+
+    @Override
+    public Observable<Response> getArtistsRaw() {
+        return null;
+    }
+
+    @Override
     public Observable<Song> getSong(int i) {
         return null;
     }
 
     @Override
-    public Observable<Response> getImage(int i) {
+    public Observable<Response> getImage(int id, String aspectRatio, int size) {
         return null;
     }
 }

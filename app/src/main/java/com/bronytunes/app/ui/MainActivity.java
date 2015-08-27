@@ -15,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,7 +27,6 @@ import com.bronytunes.app.data.Injector;
 
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -61,10 +61,10 @@ public class MainActivity extends AppCompatActivity implements TrackListingFragm
     @Inject
     AppContainer appContainer;
 
-    private String[]               tabLabels;
-    private Map<Integer, Fragment> fragments; // We lazy load this to make onCreate not lag forever
-    private ObjectGraph            activityGraph;
-    private int                    fragId;
+    private String[]              tabLabels;
+    private SparseArray<Fragment> fragments;
+    private ObjectGraph           activityGraph;
+    private int                   fragId;
 
     @Override
     public Object getSystemService(@NonNull String name) {
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements TrackListingFragm
     @Override
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        fragments = new HashMap<>(NUM_FRAGMENTS);
+        fragments = new SparseArray<>(NUM_FRAGMENTS);
 
         // Explicitly reference the application object since we don't want to match our own injector.
         activityGraph = Injector.obtain(getApplication());
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements TrackListingFragm
         final ActionBar ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);
-        if(icicle != null) restoreState(icicle);
+        if (icicle != null) restoreState(icicle);
     }
 
     private void setupDrawerContent() {
@@ -103,9 +103,6 @@ public class MainActivity extends AppCompatActivity implements TrackListingFragm
 
             switch (id) {
                 default:
-                    if (!fragments.containsKey(id)) {
-                        createFragment(id);
-                    }
                     loadFragment(id, menuItem);
                     break;
                 case R.id.offline_mode:
@@ -122,6 +119,43 @@ public class MainActivity extends AppCompatActivity implements TrackListingFragm
             drawer.closeDrawers();
             return false;
         });
+    }
+
+    private void restoreState(@NonNull Bundle icicle) {
+        int fragId = icicle.getInt(BUNDLE_KEY_FRAG_ID, R.id.listen_now);
+        MenuItem item = nav.getMenu().findItem(this.fragId);
+        loadFragment(this.fragId, item);
+    }
+
+    private Fragment createFragment(Integer id) {
+        Fragment frag;
+        switch (id) {
+            case R.id.listen_now:
+                // TODO - Create a new instance of the appropriate fragment
+                frag = ListenNowFragment.newInstance(null, null);
+                break;
+            case R.id.radio:
+                // TODO - Create a new instance of the appropriate fragment
+                frag = new Fragment();
+                break;
+            case R.id.library:
+                // TODO - Create a new instance of the appropriate fragment
+                frag = new Fragment();
+                break;
+            default:
+                throw new RuntimeException("Unknown drawer fragment clicked");
+        }
+        fragments.put(id, frag);
+        return frag;
+    }
+
+    private void loadFragment(Integer id, MenuItem item) {
+        this.fragId = id;
+        item.setChecked(true);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_host, fragments.get(id, createFragment(id)));
+        ft.addToBackStack(null);
+        ft.commit();
     }
 
     @Override
@@ -154,42 +188,6 @@ public class MainActivity extends AppCompatActivity implements TrackListingFragm
     @Override
     public void onFragmentInteraction(Uri uri) {
         // TODO - Fragment callback fleshout
-    }
-
-    private void restoreState(@NonNull Bundle icicle) {
-        int fragId = icicle.getInt(BUNDLE_KEY_FRAG_ID, R.id.listen_now);
-        MenuItem item = nav.getMenu().findItem(this.fragId);
-        loadFragment(this.fragId, item);
-    }
-
-    private void loadFragment(Integer id, MenuItem item) {
-        this.fragId = id;
-        item.setChecked(true);
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_host, fragments.get(id));
-        ft.addToBackStack(null);
-        ft.commit();
-    }
-
-    private void createFragment(Integer id) {
-        Fragment frag;
-        switch (id) {
-            case R.id.listen_now:
-                // TODO - Create a new instance of the appropriate fragment
-                frag = new Fragment();
-                break;
-            case R.id.radio:
-                // TODO - Create a new instance of the appropriate fragment
-                frag = new Fragment();
-                break;
-            case R.id.library:
-                // TODO - Create a new instance of the appropriate fragment
-                frag = new Fragment();
-                break;
-            default:
-                throw new RuntimeException("Unknown drawer fragment clicked");
-        }
-        fragments.put(id, frag);
     }
 
     /**

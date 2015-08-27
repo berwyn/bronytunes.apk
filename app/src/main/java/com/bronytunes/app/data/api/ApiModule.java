@@ -1,6 +1,7 @@
 package com.bronytunes.app.data.api;
 
 import com.bronytunes.API;
+import com.bronytunes.app.BuildConfig;
 import com.google.gson.Gson;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -16,7 +17,7 @@ import retrofit.client.OkClient;
 import retrofit.converter.GsonConverter;
 
 /**
- * Created by berwyn on 22/07/2015.
+ * A module encapsulating API-related resources
  */
 @Module(
         complete = false,
@@ -42,10 +43,11 @@ public class ApiModule {
     @Singleton
     RestAdapter provideRestAdapter(Endpoint endpoint,
                                    @Named("Api") OkHttpClient client, Gson gson) {
-        return new RestAdapter.Builder() //
-                .setClient(new OkClient(client)) //
-                .setEndpoint(endpoint) //
-                .setConverter(new GsonConverter(gson)) //
+        return new RestAdapter.Builder()
+                .setClient(new OkClient(client))
+                .setEndpoint(endpoint)
+                .setConverter(new GsonConverter(gson))
+                .setRequestInterceptor(request -> request.addHeader("User-Agent", "bronytunes.apk/" + BuildConfig.VERSION_NAME))
                 .build();
     }
 

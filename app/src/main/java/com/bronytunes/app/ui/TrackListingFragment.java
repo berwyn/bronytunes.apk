@@ -238,7 +238,7 @@ public class TrackListingFragment extends Fragment {
                        .into(holder.albumArt);
 
                 // Now, request the image and load it into the cache
-                api.getImage(album.songId)
+                api.getImage(album.songId, null, 512)
                    .subscribeOn(Schedulers.io())
                    .observeOn(Schedulers.io())
                    .doOnError(err -> Timber.e(err, "Failed to request image"))
