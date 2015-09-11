@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements TrackListingFragm
         switch (id) {
             case R.id.listen_now:
                 // TODO - Create a new instance of the appropriate fragment
-                frag = ListenNowFragment.newInstance(null, null);
+                frag = ListenNowFragment.newInstance();
                 break;
             case R.id.radio:
                 // TODO - Create a new instance of the appropriate fragment

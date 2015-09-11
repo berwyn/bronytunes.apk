@@ -18,8 +18,9 @@
             android:id="@+id/albumArt"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:scaleType="centerCrop"
             app:squareOrientation="vertical"
-            tools:src="@drawable/everfree"/>
+            tools:src="@drawable/vinyl"/>
 
         <LinearLayout
             android:layout_width="fill_parent"

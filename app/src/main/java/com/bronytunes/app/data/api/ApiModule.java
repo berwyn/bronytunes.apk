@@ -21,7 +21,10 @@ import retrofit.converter.GsonConverter;
  */
 @Module(
         complete = false,
-        library = true
+        library = true,
+        injects = {
+                APIRoute.class
+        }
 )
 public class ApiModule {
     public static final String PRODUCTION_API_URL = "https://api.github.com";

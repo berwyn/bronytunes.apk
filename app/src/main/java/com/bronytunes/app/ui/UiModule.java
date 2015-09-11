@@ -1,5 +1,7 @@
 package com.bronytunes.app.ui;
 
+import com.bronytunes.app.ui.adapters.ListenNowAdapter;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -11,6 +13,7 @@ import dagger.Provides;
 @Module(
         injects = {
                 MainActivity.class,
+                ListenNowAdapter.class
         },
         complete = false,
         library = true
