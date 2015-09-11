@@ -2,6 +2,7 @@ package com.bronytunes.app.data.api;
 
 import com.bronytunes.API;
 import com.bronytunes.app.BuildConfig;
+import com.bronytunes.app.ui.adapters.ListenNowFeaturedItem;
 import com.google.gson.Gson;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -23,7 +24,8 @@ import retrofit.converter.GsonConverter;
         complete = false,
         library = true,
         injects = {
-                APIRoute.class
+                APIRoute.class,
+                ListenNowFeaturedItem.HeaderListAdapter.class
         }
 )
 public class ApiModule {

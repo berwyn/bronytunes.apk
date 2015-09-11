@@ -121,7 +121,7 @@ public class ListenNowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             case IDX_HEADER:
             case IDX_NEW:
             case IDX_TITLE:
-                // TODO:
+                headerViews[position].bindViewHolder(holder);
                 break;
             default:
                 TrendingItemViewHolder vh = ((TrendingItemViewHolder) holder);

@@ -11,5 +11,6 @@ interface VariantRecyclerItem {
 
     int provideViewType();
     RecyclerView.ViewHolder createRecyclerView(LayoutInflater li, ViewGroup parent);
+    void bindViewHolder(RecyclerView.ViewHolder vh);
 
 }

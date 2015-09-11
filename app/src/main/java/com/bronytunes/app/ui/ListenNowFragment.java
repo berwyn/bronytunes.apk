@@ -55,6 +55,7 @@ public class ListenNowFragment extends Fragment {
 
         ButterKnife.bind(this, v);
         list.setAdapter(new ListenNowAdapter(v.getContext(), v));
+        list.setHasFixedSize(false);
 
         return v;
     }

@@ -23,6 +23,11 @@ public class ListenNowNewItem implements VariantRecyclerItem {
         return new HeaderNewViewHolder(inflater.inflate(R.layout.view_listennow_headernew, parent, false));
     }
 
+    @Override
+    public void bindViewHolder(RecyclerView.ViewHolder vh) {
+
+    }
+
     public static class HeaderNewViewHolder extends RecyclerView.ViewHolder {
 
         public HeaderNewViewHolder(View itemView) {

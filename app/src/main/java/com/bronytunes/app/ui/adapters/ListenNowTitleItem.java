@@ -23,6 +23,11 @@ public class ListenNowTitleItem implements VariantRecyclerItem {
         return new HeaderTitleViewHolder(inflater.inflate(R.layout.view_listennow_headertrending, parent, false));
     }
 
+    @Override
+    public void bindViewHolder(RecyclerView.ViewHolder vh) {
+
+    }
+
     public static class HeaderTitleViewHolder extends RecyclerView.ViewHolder {
 
         public HeaderTitleViewHolder(View itemView) {

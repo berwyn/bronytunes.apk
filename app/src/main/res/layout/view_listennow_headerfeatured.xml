@@ -15,9 +15,9 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/listFeatured"
         android:layout_width="match_parent"
-        android:layout_height="144dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:scrollbars="horizontal"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+        app:layoutManager="com.bronytunes.app.ui.widget.WrappingLinearLayoutManager"/>
 
 </LinearLayout>
