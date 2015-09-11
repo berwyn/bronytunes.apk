@@ -25,7 +25,6 @@ import android.view.ViewGroup;
 import com.bronytunes.app.R;
 import com.bronytunes.app.data.Injector;
 
-import java.util.HashMap;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -94,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements TrackListingFragm
         final ActionBar ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);
-        if (icicle != null) restoreState(icicle);
+        restoreState(icicle);
     }
 
     private void setupDrawerContent() {
@@ -121,8 +120,11 @@ public class MainActivity extends AppCompatActivity implements TrackListingFragm
         });
     }
 
-    private void restoreState(@NonNull Bundle icicle) {
-        int fragId = icicle.getInt(BUNDLE_KEY_FRAG_ID, R.id.listen_now);
+    private void restoreState(Bundle icicle) {
+        if(icicle != null)
+            this.fragId = icicle.getInt(BUNDLE_KEY_FRAG_ID, R.id.listen_now);
+        else
+            this.fragId = R.id.listen_now;
         MenuItem item = nav.getMenu().findItem(this.fragId);
         loadFragment(this.fragId, item);
     }
